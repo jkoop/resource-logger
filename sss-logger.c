@@ -35,17 +35,21 @@ int main(char *argv[]) {
 	refreshLoadAverages();
 	refreshMemory();
 
-	printf("hostname: %s\n", hostname);
-	printf("timestamp: %lli\n", timestamp);
-	printf("uptime: %f\n", uptime);
-	printf("loadAvg1: %f\n", loadAvg1);
-	printf("loadAvg5: %f\n", loadAvg5);
-	printf("loadAvg15: %f\n", loadAvg15);
-	printf("totalMemory: %li\n", totalMemory);
-	printf("freeMemory: %li\n", freeMemory);
-	printf("availableMemory: %li\n", availableMemory);
-	printf("totalSwap: %lli\n", totalSwap);
-	printf("freeSwap: %lli\n", freeSwap);
+	if (stringStartsWith(argv[1], "tsv")) {
+		printf("%s\t%lli\t%f\t%f\t%f\t%f\t%li\t%li\t%li\t%lli\t%lli\n", hostname, timestamp, uptime, loadAvg1, loadAvg5, loadAvg15, totalMemory, freeMemory, availableMemory, totalSwap, freeSwap);
+	} else {
+		printf("hostname: %s\n", hostname);
+		printf("timestamp: %lli\n", timestamp);
+		printf("uptime: %f\n", uptime);
+		printf("loadAvg1: %f\n", loadAvg1);
+		printf("loadAvg5: %f\n", loadAvg5);
+		printf("loadAvg15: %f\n", loadAvg15);
+		printf("totalMemory: %li\n", totalMemory);
+		printf("freeMemory: %li\n", freeMemory);
+		printf("availableMemory: %li\n", availableMemory);
+		printf("totalSwap: %lli\n", totalSwap);
+		printf("freeSwap: %lli\n", freeSwap);
+	}
 
 	return 0;
 }
