@@ -85,7 +85,7 @@ void refreshLoadAverages() {
 	fclose(fp);
 }
 
-void refreshMemory(void) {
+void refreshMemory() {
 	FILE *fp = fopen("/proc/meminfo", "r");
 	char buf[48];
 
