@@ -28,15 +28,20 @@ void refreshMemory();
 bool stringStartsWith();
 bool stringEndsWith();
 
-int main(char *argv[]) {
+int main(int argc, char *argv[]) {
 	refreshHostname();
 	refreshTimestamp();
 	refreshUptime();
 	refreshLoadAverages();
 	refreshMemory();
 
-	if (stringStartsWith(argv[1], "tsv")) {
-		printf("%s\t%lli\t%f\t%f\t%f\t%f\t%li\t%li\t%li\t%lli\t%lli\n", hostname, timestamp, uptime, loadAvg1, loadAvg5, loadAvg15, totalMemory, freeMemory, availableMemory, totalSwap, freeSwap);
+	if (argc > 1) {
+		if (stringStartsWith(argv[1], "--tsv")) {
+			printf("%s\t%lli\t%f\t%f\t%f\t%f\t%li\t%li\t%li\t%lli\t%lli\n", hostname, timestamp, uptime, loadAvg1, loadAvg5, loadAvg15, totalMemory, freeMemory, availableMemory, totalSwap, freeSwap);
+		} else {
+			printf("Usage: %s [--tsv]\n", argv[0]);
+			return 1;
+		}
 	} else {
 		printf("hostname: %s\n", hostname);
 		printf("timestamp: %lli\n", timestamp);
