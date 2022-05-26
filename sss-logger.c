@@ -4,8 +4,6 @@
 #include <string.h>
 #include <sys/time.h>
 
-const int MEMINFO_BUFFER_LENGTH = 48;
-
 char hostname[256];
 long long timestamp;
 float uptime;
@@ -89,9 +87,9 @@ void refreshLoadAverages() {
 
 void refreshMemory(void) {
 	FILE *fp = fopen("/proc/meminfo", "r");
-	char buf[MEMINFO_BUFFER_LENGTH];
+	char buf[48];
 
-	while (fgets(buf, MEMINFO_BUFFER_LENGTH, fp)) {
+	while (fgets(buf, 48, fp)) {
 		if (stringStartsWith(buf, "MemTotal")) {
 			if (stringEndsWith(buf, "kB\n")) {
 				totalMemory = strtoimax(buf + 9, NULL, 10);
