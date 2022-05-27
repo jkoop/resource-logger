@@ -6,20 +6,25 @@ Example output:
 ```plain
 $ ./a.out
 hostname: OfficeComp
-timestamp: 1653527758
-uptime: 10439.269531
-loadAvg1: 1.720000
-loadAvg5: 1.640000
-loadAvg15: 1.550000
-totalMemory: 24496544
-freeMemory: 16169268
-availableMemory: 20476300
-totalSwap: 2097148
-freeSwap: 2097148
+timestamp: 1653616581
+cpus: 4
+uptime: 7791.319824
+load_avg_1: 0.650000
+load_avg_5: 0.780000
+load_avg_15: 0.860000
+memory_total: 24496544
+memory_free: 15445052
+memory_available: 19328424
+swap_total: 2097148
+swap_free: 2097148
 ```
 ```plain
 $ ./a.out --tsv
-OfficeComp	1653527848	10529.059570	1.540000	1.570000	1.530000	24496544	16102412	20409728	2097148	2097148
+OfficeComp	1653616581	4	7791.330078	0.650000	0.780000	0.860000	24496544	15445272	19328644	2097148	2097148
+```
+```plain
+$ ./a.out --form
+hostname=OfficeComp&timestamp=1653616581&cpus=4&uptime=7791.319824&load_avg_1=0.650000&load_avg_5=0.780000&load_avg_15=0.860000&memory_total=24496544&memory_free=15445272&memory_available=19328644&swap_total=2097148&swap_free=2097148
 ```
 
 ## Build

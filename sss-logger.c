@@ -6,6 +6,7 @@
 
 char hostname[256];
 long long timestamp;
+long cpus;
 float uptime;
 float loadAvg1;
 float loadAvg5;
@@ -19,6 +20,7 @@ long long freeSwap;
 int main();
 void refreshHostname();
 void refreshTimestamp();
+void refreshCpus();
 void refreshUptime();
 void refreshLoadAverages();
 void refreshMemory();
@@ -29,6 +31,7 @@ bool stringEndsWith();
 int main(int argc, char *argv[]) {
 	refreshHostname();
 	refreshTimestamp();
+	refreshCpus();
 	refreshUptime();
 	refreshLoadAverages();
 	refreshMemory();
@@ -37,6 +40,7 @@ int main(int argc, char *argv[]) {
 		if (stringStartsWith(argv[1], "--form")) {
 			printf("hostname=%s&", hostname);
 			printf("timestamp=%lli&", timestamp);
+			printf("cpus=%li&", cpus);
 			printf("uptime=%f&", uptime);
 			printf("load_avg_1=%f&", loadAvg1);
 			printf("load_avg_5=%f&", loadAvg5);
@@ -49,6 +53,7 @@ int main(int argc, char *argv[]) {
 		} else if (stringStartsWith(argv[1], "--tsv")) {
 			printf("%s\t", hostname);
 			printf("%lli\t", timestamp);
+			printf("%li\t", cpus);
 			printf("%f\t", uptime);
 			printf("%f\t", loadAvg1);
 			printf("%f\t", loadAvg5);
@@ -65,6 +70,7 @@ int main(int argc, char *argv[]) {
 	} else {
 		printf("hostname: %s\n", hostname);
 		printf("timestamp: %lli\n", timestamp);
+		printf("cpus: %li\n", cpus);
 		printf("uptime: %f\n", uptime);
 		printf("load_avg_1: %f\n", loadAvg1);
 		printf("load_avg_5: %f\n", loadAvg5);
@@ -93,6 +99,19 @@ void refreshTimestamp() {
 	timestamp = te.tv_sec; // seconds since epoch
 }
 
+void refreshCpus() {
+	FILE *fp;
+	fp = fopen("/proc/cpuinfo", "r");
+	cpus = 0;
+	char line[256];
+	while (fgets(line, sizeof(line), fp) != NULL) {
+		if (strstr(line, "processor") != NULL) {
+			cpus++;
+		}
+	}
+	fclose(fp);
+}
+
 void refreshUptime() {
 	FILE *fp;
 	fp = fopen("/proc/uptime", "r");
@@ -109,9 +128,9 @@ void refreshLoadAverages() {
 
 void refreshMemory() {
 	FILE *fp = fopen("/proc/meminfo", "r");
-	char buf[48];
+	char buf[256];
 
-	while (fgets(buf, 48, fp)) {
+	while (fgets(buf, 256, fp)) {
 		if (stringStartsWith(buf, "MemTotal")) {
 			if (stringEndsWith(buf, "kB\n")) {
 				totalMemory = strtoimax(buf + 9, NULL, 10);
