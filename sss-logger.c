@@ -34,24 +34,46 @@ int main(int argc, char *argv[]) {
 	refreshMemory();
 
 	if (argc > 1) {
-		if (stringStartsWith(argv[1], "--tsv")) {
-			printf("%s\t%lli\t%f\t%f\t%f\t%f\t%li\t%li\t%li\t%lli\t%lli\n", hostname, timestamp, uptime, loadAvg1, loadAvg5, loadAvg15, totalMemory, freeMemory, availableMemory, totalSwap, freeSwap);
+		if (stringStartsWith(argv[1], "--form")) {
+			printf("hostname=%s&", hostname);
+			printf("timestamp=%lli&", timestamp);
+			printf("uptime=%f&", uptime);
+			printf("load_avg_1=%f&", loadAvg1);
+			printf("load_avg_5=%f&", loadAvg5);
+			printf("load_avg_15=%f&", loadAvg15);
+			printf("memory_total=%li&", totalMemory);
+			printf("memory_free=%li&", freeMemory);
+			printf("memory_available=%li&", availableMemory);
+			printf("swap_total=%lli&", totalSwap);
+			printf("swap_free=%lli\n", freeSwap);
+		} else if (stringStartsWith(argv[1], "--tsv")) {
+			printf("%s\t", hostname);
+			printf("%lli\t", timestamp);
+			printf("%f\t", uptime);
+			printf("%f\t", loadAvg1);
+			printf("%f\t", loadAvg5);
+			printf("%f\t", loadAvg15);
+			printf("%li\t", totalMemory);
+			printf("%li\t", freeMemory);
+			printf("%li\t", availableMemory);
+			printf("%lli\t", totalSwap);
+			printf("%lli\n", freeSwap);
 		} else {
-			printf("Usage: %s [--tsv]\n", argv[0]);
+			printf("Usage: %s [--tsv|--form]\n", argv[0]);
 			return 1;
 		}
 	} else {
 		printf("hostname: %s\n", hostname);
 		printf("timestamp: %lli\n", timestamp);
 		printf("uptime: %f\n", uptime);
-		printf("loadAvg1: %f\n", loadAvg1);
-		printf("loadAvg5: %f\n", loadAvg5);
-		printf("loadAvg15: %f\n", loadAvg15);
-		printf("totalMemory: %li\n", totalMemory);
-		printf("freeMemory: %li\n", freeMemory);
-		printf("availableMemory: %li\n", availableMemory);
-		printf("totalSwap: %lli\n", totalSwap);
-		printf("freeSwap: %lli\n", freeSwap);
+		printf("load_avg_1: %f\n", loadAvg1);
+		printf("load_avg_5: %f\n", loadAvg5);
+		printf("load_avg_15: %f\n", loadAvg15);
+		printf("memory_total: %li\n", totalMemory);
+		printf("memory_free: %li\n", freeMemory);
+		printf("memory_available: %li\n", availableMemory);
+		printf("swap_total: %lli\n", totalSwap);
+		printf("swap_free: %lli\n", freeSwap);
 	}
 
 	return 0;
